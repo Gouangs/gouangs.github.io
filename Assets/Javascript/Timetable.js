@@ -50,7 +50,9 @@ const _format = {
 	[2]: [5,5,1,1,12,12,28,28,29,29],
 	[3]: [8,8,3,3,13,13,13,13,20,20],
 	[4]: [14,14,12,12,4,4,8,8,5,5],
-	[5]: [26,26,26,4,4]
+	[5]: [26,26,26,4,4],
+	[6]: [],
+	[7]: []
 }
 
 var dt = new Date()
@@ -61,27 +63,34 @@ var nextFormat = _format[nextDay];
 setInterval(() => {
 	dt = new Date();
 	currentDay = dt.getDay();
+	nextDay = dt.getDay() + 1;
+
 	currentFormat = _format[currentDay];
-    nextDay = dt.getDay() + 1;
-    nextFormat = _format[nextDay];
+	nextFormat = _format[nextDay];
+
 	dFormat = get(currentFormat);
-    let fnlF1 = "TODAY<br><br>"
-    let p1 = document.getElementById('today')
-	dFormat.forEach((v) => {
-        let t = JSON.stringify(v.name)
-		let m = JSON.stringify(v.mapel)
-		
-        fnlF1 = fnlF1 + t + "<=>" + m + '<br>';
-	})
-    tFormat = get(nextFormat);
-    let fnlF2 = "TOMORROW<br><br>"
-    let p2 = document.getElementById('tomorrow')
-    tFormat.forEach((v) => {
-        let t = JSON.stringify(v.name)
-        let m = JSON.stringify(v.mapel);
-        
-        fnlF2 = fnlF2 + t + "<=>" + m + '<br>';
-    })
-    p2.innerHTML = fnlF2;
-    p1.innerHTML = fnlF1;
+	if (dFormat && Object.keys(dFormat).length > 0) {
+		let fnlF1 = "TODAY<br><br>"
+		let p1 = document.getElementById('today')
+		dFormat.forEach((v) => {
+			let t = JSON.stringify(v.name)
+			let m = JSON.stringify(v.mapel)
+
+			fnlF1 = fnlF1 + t + "<=>" + m + '<br>';
+		})
+	}
+
+	tFormat = get(nextFormat);
+	if (tFormat && Object.keys(tFormat).length > 0) {
+		let fnlF2 = "TOMORROW<br><br>"
+		let p2 = document.getElementById('tomorrow')
+		tFormat.forEach((v) => {
+			let t = JSON.stringify(v.name)
+			let m = JSON.stringify(v.mapel);
+
+			fnlF2 = fnlF2 + t + "<=>" + m + '<br>';
+		})
+		p2.innerHTML = fnlF2;
+		p1.innerHTML = fnlF1;
+	}
 }, 1000)
