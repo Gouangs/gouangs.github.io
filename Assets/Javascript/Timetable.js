@@ -62,6 +62,8 @@ setInterval(() => {
 	nextFormat = _format[nextDay];
 
 	dFormat = currentFormat ? get(currentFormat) : false
+	tFormat = nextFormat ? get(nextFormat) : false
+
 	let fnlF1 = "TODAY<br><br>";
 	if (dFormat && Object.keys(dFormat).length > 0) {
 		dFormat.forEach((v) => {
