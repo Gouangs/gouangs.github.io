@@ -50,16 +50,9 @@ const _format = {
 	[2]: [5,5,1,1,12,12,28,28,29,29],
 	[3]: [8,8,3,3,13,13,13,13,20,20],
 	[4]: [14,14,12,12,4,4,8,8,5,5],
-	[5]: [26,26,26,4,4],
-	[6]: [],
-	[7]: []
+	[5]: [26,26,26,4,4]
 }
 
-var dt = new Date()
-var currentDay = dt.getDay();
-var currentFormat = _format[currentDay];
-var nextDay = dt.getDay() + 1;
-var nextFormat = _format[nextDay];
 setInterval(() => {
 	dt = new Date();
 	currentDay = dt.getDay();
@@ -68,7 +61,7 @@ setInterval(() => {
 	currentFormat = _format[currentDay];
 	nextFormat = _format[nextDay];
 
-	dFormat = get(currentFormat);
+	dFormat = currentFormat ? get(currentFormat) : false
 	if (dFormat && Object.keys(dFormat).length > 0) {
 		let fnlF1 = "TODAY<br><br>"
 		let p1 = document.getElementById('today')
@@ -80,7 +73,7 @@ setInterval(() => {
 		})
 	}
 
-	tFormat = get(nextFormat);
+	tFormat = nextFormat ? get(nextFormat) : false;
 	if (tFormat && Object.keys(tFormat).length > 0) {
 		let fnlF2 = "TOMORROW<br><br>"
 		let p2 = document.getElementById('tomorrow')
