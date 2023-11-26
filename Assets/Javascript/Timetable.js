@@ -53,9 +53,6 @@ const _format = {
 	[5]: [26,26,26,4,4]
 }
 
-let fnlF1 = "";
-let fnlF2 = "";
-
 setInterval(() => {
 	dt = new Date();
 	currentDay = dt.getDay();
@@ -65,37 +62,33 @@ setInterval(() => {
 	nextFormat = _format[nextDay];
 
 	dFormat = currentFormat ? get(currentFormat) : false
-	let p1 = document.getElementById('today')
+	let fnlF1 = "TODAY<br><br>";
 	if (dFormat && Object.keys(dFormat).length > 0) {
-		fnlF1 = "TODAY<br><br>"
 		dFormat.forEach((v) => {
-			let t = JSON.stringify(v.name)
-			let m = JSON.stringify(v.mapel)
+			let t = JSON.stringify(v.name);
+			let m = JSON.stringify(v.mapel);
 
 			fnlF1 = fnlF1 + t + "<=>" + m + '<br>';
-		})
-	}
-	else {
-		fnlF1 = "TODAY<br><br>"
-		fnlF1 = fnlF1 + "Rest day, no school"
+		});
+	} else {
+		fnlF1 = fnlF1 + "Rest day, no school";
 	}
 
-	tFormat = nextFormat ? get(nextFormat) : false;
-	let p2 = document.getElementById('tomorrow')
+	let p1 = document.getElementById('today');
+	p1.innerHTML = fnlF1;
+
+	let fnlF2 = "TOMORROW<br><br>";
 	if (tFormat && Object.keys(tFormat).length > 0) {
-		fnlF2 = "TOMORROW<br><br>"
 		tFormat.forEach((v) => {
-			let t = JSON.stringify(v.name)
+			let t = JSON.stringify(v.name);
 			let m = JSON.stringify(v.mapel);
 
 			fnlF2 = fnlF2 + t + "<=>" + m + '<br>';
-		})
-	}
-	else {
-		fnlF2 = "TOMORROW<br><br>"
-		fnlF2 = fnlF2 + "Rest day, no school"
+		});
+	} else {
+		fnlF2 = fnlF2 + "Rest day, no school";
 	}
 
+	let p2 = document.getElementById('tomorrow');
 	p2.innerHTML = fnlF2;
-	p1.innerHTML = fnlF1;
 }, 1000)
