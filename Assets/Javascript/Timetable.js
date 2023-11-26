@@ -53,6 +53,9 @@ const _format = {
 	[5]: [26,26,26,4,4]
 }
 
+let fnlF1 = "";
+let fnlF2 = "";
+
 setInterval(() => {
 	dt = new Date();
 	currentDay = dt.getDay();
@@ -64,7 +67,7 @@ setInterval(() => {
 	dFormat = currentFormat ? get(currentFormat) : false
 	let p1 = document.getElementById('today')
 	if (dFormat && Object.keys(dFormat).length > 0) {
-		let fnlF1 = "TODAY<br><br>"
+		fnlF1 = "TODAY<br><br>"
 		dFormat.forEach((v) => {
 			let t = JSON.stringify(v.name)
 			let m = JSON.stringify(v.mapel)
@@ -73,14 +76,14 @@ setInterval(() => {
 		})
 	}
 	else {
-		let fnlF1 = "TODAY<br><br>"
+		fnlF1 = "TODAY<br><br>"
 		fnlF1 = fnlF1 + "Rest day, no school"
 	}
 
 	tFormat = nextFormat ? get(nextFormat) : false;
 	let p2 = document.getElementById('tomorrow')
 	if (tFormat && Object.keys(tFormat).length > 0) {
-		let fnlF2 = "TOMORROW<br><br>"
+		fnlF2 = "TOMORROW<br><br>"
 		tFormat.forEach((v) => {
 			let t = JSON.stringify(v.name)
 			let m = JSON.stringify(v.mapel);
@@ -89,8 +92,8 @@ setInterval(() => {
 		})
 	}
 	else {
-		let fnlF1 = "TODAY<br><br>"
-		fnlF1 = fnlF1 + "Rest day, no school"
+		fnlF2 = "TOMORROW<br><br>"
+		fnlF2 = fnlF2 + "Rest day, no school"
 	}
 
 	p2.innerHTML = fnlF2;
