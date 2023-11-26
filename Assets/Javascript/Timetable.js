@@ -84,5 +84,4 @@ setInterval(() => {
     })
     p2.innerHTML = fnlF2;
     p1.innerHTML = fnlF1;
-    console.log('sup')
 }, 1000)
