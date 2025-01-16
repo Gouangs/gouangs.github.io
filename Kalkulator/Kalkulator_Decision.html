@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://polman-babel.ac.id/public/uploads/logo/iconpolman.ico" type="image/x-icon">
+    <title>Kalkulator Pohon Keputusan</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        .node circle {
+            fill: #fff;
+            stroke: #f04C26;
+            stroke-width: 2px;
+        }
+        .node-leaf circle {
+            fill: #98fb98;
+            stroke: #2e8b57;
+        }
+        .node-decision circle {
+            fill: #fff;
+            stroke: #f04C26;
+        }
+        .node text {
+            font: 14px sans-serif;
+        }
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+        #treeContainer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: calc(100% - 350px);
+            height: 100vh;
+            background: #f8f9fa;
+        }
+        .input-section {
+            width: 350px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: white;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-scroll-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        #floating-explanation {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            resize: both;
+            overflow: hidden;
+        }
+        .window-header {
+            padding: 10px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .window-content {
+            padding: 15px;
+            max-height: calc(100% - 40px);
+            overflow: auto;
+        }
+        .node-collapse-btn {
+            display: none;
+        }
+        .has-children .node-collapse-btn {
+            display: inline-block;
+        }
+        .minimize-btn {
+            cursor: pointer;
+        }
+        #helpBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #f04C26;
+            color: white;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #helpBtn:hover {
+            background-color: #f04C26;
+        }
+
+        .help-text {
+            display: none;
+        }
+
+        #helpText {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 999;
+        }
+
+
+        #helpText h5 {
+            margin-bottom: 10px;
+        }
+
+        #helpText ol {
+            padding-left: 20px;
+        }
+    </style>
+    
+</head>
+
+<body>
+     
+    <div class="input-section">
+        <div class="card border-0">
+            <div class="card-header bg-primary text-white">
+                <span>Input Keputusan</span>
+            </div>
+        </div>
+        <div class="input-scroll-container" id="inputContainer">
+            <div class="mb-3">
+                <label class="form-label">Keputusan Utama</label>
+                <input type="text" class="form-control" id="mainDecision" placeholder="Masukkan keputusan utama">
+                <button class="btn btn-primary mt-2" onclick="addCondition('root')">
+                    <i class="fas fa-plus"></i> Tambah Kondisi
+                </button>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div id="treeContainer"></div>
+    <div id="floating-explanation">
+        <div class="window-header">
+            <span>Penjelasan Path</span>
+            <i class="fas fa-minus minimize-btn"></i>
+        </div>
+        <div class="window-content">
+            <div id="pathExplanation"></div>
+        </div>
+    </div>
+    <div id="helpContainer">
+        <div class="alert alert-info mt-3 help-text" id="helpText">
+            <h5>Cara Penggunaan:</h5>
+            <ol>
+                <li>Masukkan keputusan utama pada input pertama</li>
+                <li>Klik "Tambah Kondisi" untuk menambahkan kondisi baru</li>
+                <li>Isi setiap kondisi yang mungkin terjadi</li>
+                <li>Klik "Tambah Hasil" untuk menambahkan hasil dari kondisi</li>
+                <li>Klik "Hapus" untuk menghapus node yang tidak diperlukan</li>
+            </ol>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <button class="btn btn-info" id="helpBtn">?</button>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('helpBtn').addEventListener('click', function () {
+            const helpText = document.getElementById('helpText');
+            helpText.style.display = (helpText.style.display === 'block') ? 'none' : 'block';
+        });
+
+        let nodeId = 0;
+        let treeData = {
+            id: 'root',
+            name: "",
+            type: "decision",
+            children: []
+        };
+        document.getElementById('mainDecision').addEventListener('input', function(e) {
+            treeData.name = e.target.value;
+            updateTree();
+            updateExplanation();
+        });
+        function createNodeHtml(nodeId, parentId, level = 0, isLeaf = false) {
+            const indent = level * 15;
+            return `
+                <div class="node-input-group" data-id="${nodeId}" data-level="${level}">
+                    <div class="d-flex align-items-center mb-2" style="margin-left: ${indent}px">
+                        <i class="fas fa-minus node-collapse-btn"></i>
+                        <div class="input-group">
+                            <input type="text" class="form-control node-input" 
+                                placeholder="${isLeaf ? 'Masukkan hasil' : `Kondisi level ${level}`}">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="actionMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-cogs"></i> Aksi
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="actionMenuDropdown">
+                                ${!isLeaf ? ` 
+                                    <li><a class="dropdown-item" onclick="addCondition('${nodeId}', ${level + 1})">
+                                        <i class="fas fa-plus"></i> Tambah Kondisi
+                                    </a></li>
+                                    <li><a class="dropdown-item" onclick="addLeaf('${nodeId}', ${level + 1})">
+                                        <i class="fas fa-leaf"></i> Tambah Daun
+                                    </a></li>
+                                ` : ''}
+                                <li><a class="dropdown-item text-danger" onclick="deleteNode('${nodeId}')">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="collapse-section"></div>
+                </div>
+            `;
+        }
+        function updateInputEventListeners() {
+            document.querySelectorAll('.node-input').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const nodeId = e.target.closest('.node-input-group').getAttribute('data-id');
+                    updateNodeName(nodeId, e.target.value);
+                });
+            });
+        }
+        function addCondition(parentId, level) {
+            const nodeId = `node_${Date.now()}`;
+            const parentElement = parentId === 'root' ? 
+                document.getElementById('inputContainer') :
+                document.querySelector(`[data-id="${parentId}"] .collapse-section`);
+            const nodeHtml = createNodeHtml(nodeId, parentId, level);
+            parentElement.insertAdjacentHTML('beforeend', nodeHtml);
+            const newNode = {
+                id: nodeId,
+                name: "",
+                type: "decision",
+                level: level,
+                children: []
+            };
+            if (parentId === 'root') {
+                treeData.children.push(newNode);
+            } else {
+                const parentNode = findNode(treeData, parentId);
+                if (parentNode) {
+                    parentNode.children.push(newNode);
+                }
+            }
+            updateMinimizeButtons();
+            updateInputEventListeners();
+            scrollToBottom();
+        }
+        function addLeaf(parentId, level) {
+            const nodeId = `leaf_${Date.now()}`;
+            const parentElement = document.querySelector(`[data-id="${parentId}"] .collapse-section`);
+            const nodeHtml = createNodeHtml(nodeId, parentId, level, true);
+            parentElement.insertAdjacentHTML('beforeend', nodeHtml);
+            const newNode = {
+                id: nodeId,
+                name: "",
+                type: "leaf",
+                level: level,
+                children: []
+            };
+            const parentNode = findNode(treeData, parentId);
+            if (parentNode) {
+                parentNode.children.push(newNode);
+            }
+            updateMinimizeButtons();
+            updateInputEventListeners();
+            scrollToBottom();
+        }
+        function updateMinimizeButtons() {
+            document.querySelectorAll('.node-input-group').forEach(node => {
+                const section = node.querySelector('.collapse-section');
+                const hasChildren = section && section.children.length > 0;
+                node.classList.toggle('has-children', hasChildren);
+            });
+        }
+        function deleteNode(id) {
+            const element = document.querySelector(`[data-id="${id}"]`);
+            if (element) {
+                element.remove();
+            }
+            deleteNodeFromTree(treeData, id);
+            updateTree();
+            updateExplanation();
+            updateMinimizeButtons();
+        }
+        function findNode(node, id) {
+            if (node.id === id) return node;
+            for (let child of node.children) {
+                const found = findNode(child, id);
+                if (found) return found;
+            }
+            return null;
+        }
+        function deleteNodeFromTree(node, id) {
+            node.children = node.children.filter(child => {
+                if (child.id === id) return false;
+                deleteNodeFromTree(child, id);
+                return true;
+            });
+        }
+        function updateNodeName(id, name) {
+            const node = findNode(treeData, id);
+            if (node) {
+                node.name = name;
+                updateTree();
+                updateExplanation();
+            }
+        }
+        function getAllPaths(node, currentPath = []) {
+            const paths = [];
+            currentPath = [...currentPath, node];
+            if (node.children.length === 0 || node.type === 'leaf') {
+                paths.push(currentPath);
+            } else {
+                for (const child of node.children) {
+                    paths.push(...getAllPaths(child, currentPath));
+                }
+            }
+            return paths;
+        }
+        function updateExplanation() {
+            const paths = getAllPaths(treeData);
+            const explanationDiv = document.getElementById('pathExplanation');
+            explanationDiv.innerHTML = '';
+            paths.forEach((path, index) => {
+                if (path.every(node => node.name)) {
+                    const pathDiv = document.createElement('div');
+                    pathDiv.className = 'mb-3 p-2 border-bottom';
+                    const pathText = path.map(node => node.name).join(' → ');
+                    pathDiv.innerHTML = `<strong>Path ${index + 1}:</strong><br>${pathText}`;
+                    explanationDiv.appendChild(pathDiv);
+                }
+            });
+        }
+        function updateTree() {
+            const container = document.getElementById('treeContainer');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            const margin = {top: 40, right: 90, bottom: 50, left: 90};
+            d3.select("#treeContainer").select("svg").remove();
+            const svg = d3.select("#treeContainer")
+                .append("svg")
+                .attr("width", "100%")
+                .attr("height", "100%")
+                .attr("viewBox", [0, 0, width, height])
+                .attr("style", "max-width: 100%; height: auto;")
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+            const tree = d3.tree()
+                .size([width - margin.left - margin.right, height - margin.top - margin.bottom])
+                .separation((a, b) => 1);
+            const root = d3.hierarchy(treeData);
+            root.descendants().forEach((d, i) => {
+                d.id = i;
+                d._children = d.children;
+            });
+            const treeLayout = tree(root);
+            const zoom = d3.zoom()
+                .scaleExtent([0.1, 3])
+                .on("zoom", (event) => {
+                    svg.attr("transform", event.transform);
+                });
+            d3.select("#treeContainer svg")
+                .call(zoom)
+                .call(zoom.transform, d3.zoomIdentity
+                    .translate(width / 4, height / 6)
+                    .scale(0.8));
+            const link = svg.selectAll(".link")
+                .data(root.links())
+                .enter()
+                .append("g");
+            link.append("path")
+                .attr("class", "link")
+                .attr("d", d3.linkVertical()
+                    .x(d => d.x)
+                    .y(d => d.y));
+            link.append("path")
+                .attr("class", "arrow")
+                .attr("d", d => {
+                    const dx = d.target.x - d.source.x;
+                    const dy = d.target.y - d.source.y;
+                    const angle = Math.atan2(dy, dx);
+                    const x2 = d.target.x - 10 * Math.cos(angle);
+                    const y2 = d.target.y - 10 * Math.sin(angle);
+                    return `M${x2},${y2} l-5,-5 l5,5 l-5,5`;
+                });
+            const node = svg.selectAll(".node")
+                .data(root.descendants())
+                .enter()
+                .append("g")
+                .attr("class", d => `node ${d.data.type === 'leaf' ? 'node-leaf' : 'node-decision'}`)
+                .attr("transform", d => `translate(${d.x},${d.y})`);
+            node.append("rect")
+                .attr("x", d => -d.data.name.length * 5)
+                .attr("y", -20)
+                .attr("width", d => d.data.name.length * 10)
+                .attr("height", 40)
+                .attr("rx", 5)
+                .attr("ry", 5)
+                .attr("fill", d => d.data.type === 'leaf' ? "#98fb98" : "#fff")
+                .attr("stroke", d => d.data.type === 'leaf' ? "#2e8b57" : "#4169e1")
+                .attr("stroke-width", 2);
+            node.append("text")
+                .attr("dy", 5)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "16px")
+                .text(d => d.data.name || "...");
+        }
+        
+        document.querySelectorAll('.node-input').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const nodeId = e.target.closest('.node-input-group').getAttribute('data-id');
+                updateNodeName(nodeId, e.target.value);
+            });
+        });
+        function scrollToBottom() {
+            const container = document.getElementById('inputContainer');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        $(document).ready(function() {
+            $(document).on('click', '#floating-explanation .minimize-btn', function() {
+                const content = $("#floating-explanation .window-content");
+                content.slideToggle();
+                $(this).toggleClass('fa-minus fa-plus');
+            });
+
+            $(document).on('click', '.node-collapse-btn', function() {
+                const section = $(this).closest('.node-input-group').find('.collapse-section');
+                section.slideToggle();
+                $(this).toggleClass('fa-minus fa-plus');
+            });
+
+            $("#floating-explanation").draggable({
+                handle: ".window-header",
+                containment: "window"
+            });
+        });
+        
+        updateTree();
+        updateExplanation();
+    </script>
+</body>
+
+</html>

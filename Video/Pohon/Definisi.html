@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Video Pembelajaran</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../../Assets/CSS/style1.css">
+    <style>
+        body, html {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+ 
+          justify-content: center;
+          align-items: center;
+        }
+
+        .video-container {
+          position: relative;
+          width: 80%;
+          max-width: 800px;
+          background-color: #000;
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          justify-self: center;
+          align-items: center;
+          margin-top: 5%;
+        }
+
+        .video-wrapper {
+          position: relative;
+          padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+
+        .video-iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+
+        .video-controls {
+          display: flex;
+          justify-content: center;
+          padding: 10px;
+          background-color: rgba(0, 0, 0, 0.7);
+          border-top: 2px solid #fff;
+        }
+
+        .play-pause-btn {
+          background-color: #ff6600;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          cursor: pointer;
+          border-radius: 5px;
+          font-size: 16px;
+          transition: background-color 0.3s ease;
+        }
+
+        .play-pause-btn:hover {
+          background-color: #ff8533;
+        }
+    </style>
+</head>
+<body>
+    <!-- #Navbar -->
+    <nav class="wrapper">
+        <div class="brand">
+        <a href="../../index.html">
+          <img src="../../Assets/img/Logo.png" href="/">
+        </a>
+        </div>
+     <ul class="navigation">
+        <li><a href="../../Materi/Materi.html">Materi</a></li>
+        <li><a href="../../Video/Video.html" class="active">Video</a></li>
+        <li><a href="../../Kalkulator/Kalkulator.html">Kalkulator </a></li>
+        <li><a href="../../Quiz/Quiz.html">Quiz</a></li>
+        <li><a href="../../About.html"><img src="../../Assets/img/about.png" class="about-img"></a></li>
+     </ul>
+    </nav>
+     <!-- #endNavbar-->
+    
+       <div class="video-container">
+         <div class="video-wrapper">
+           <iframe id="youtubeVideo" class="video-iframe" 
+             src="https://www.youtube.com/embed/EyqxJLhGrrc?enablejsapi=1&rel=0" 
+             title="YouTube video player" 
+             frameborder="0" 
+             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+             allowfullscreen>
+           </iframe>
+           
+         </div>
+         <div class="video-controls">
+           <button class="play-pause-btn" onclick="toggleVideo()">Play/Pause</button>
+         </div>
+       </div>
+     
+     
+      <!-- #footer-->
+       <footer class="footer">
+        <div class="footer-left">
+          <h3>Dibuat oleh</h3>
+          <div class="footer-Logo">
+            <img src="../../Assets/img/Logo kelompok.png">
+            <img src="../../Assets/img/TRPL.png">
+            <img src="../../Assets/img/polman.png">
+          </div>
+          <p class="footer-copyright">2024 Kelompok 9</p>
+          <p class="footer-copyright">1 TRPL A</p>
+          <p class="footer-copyright">Politeknik Manufaktur Negeri Bangka Belitung</p>
+        </div>
+  
+        <div class="footer-center">
+         <div>
+          <img src="../../Assets/img/Map.png">
+          <p><span>Indonesia</span>
+          Bangka Belitung , Sungai Liat</p>
+         </div>
+         <div>
+          <img src="../../Assets/img/phone.png">
+          <p>+62 812-7114-4076</p>
+         </div>
+         <div>
+          <img src="../../Assets/img/email.png">
+          <p><a herf="#">Bakugouopo098@gmail.com</a></p>
+         </div>
+        </div>
+  
+        <div class="footer-right">
+          <p class="footer-about">
+            <span>About</span>
+            Website Pohon dan pohon berakar adalah website
+            yang bertujuan untuk Membimbing Mahsiswa dalam 
+            Mempelajari salah satu materi matematika diskrit 
+            mengenai Pohon dan pohon berakar . Tidak hanya itu
+            Website kami juga menyediakan berbagai kategori 
+            yang disediakan , mulai dari kumpulan materi ,
+            video , Kalkulator , dan Quiz.
+          </p>
+          <div class="footer-media">
+           <a href="https://youtube.com/@mochrzky5353?si=mKDM9C0j6uW7ZCyW"><img src="../../Assets/img/yt.png"></a>
+           <a href="https://www.instagram.com/rzky.moch/feed/?hl=id"><img src="../../Assets/img/Ig.png"></a>
+          </div>
+        </div>
+       </footer>
+      <!-- #endfooter -->
+       <script>
+        let player;
+
+        // This function will be called when the YouTube Iframe API is ready
+        function onYouTubeIframeAPIReady() {
+            // Initialize the player
+            player = new YT.Player('youtubeVideo', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready to interact with
+            console.log('Player is ready');
+        }
+
+        function onPlayerStateChange(event) {
+            // You can add functionality here to handle state changes if needed
+        }
+
+        function toggleVideo() {
+            if (player) {
+                const state = player.getPlayerState();
+                if (state === YT.PlayerState.PLAYING) {
+                    player.pauseVideo();
+                } else if (state === YT.PlayerState.PAUSED || state === YT.PlayerState.ENDED) {
+                    player.playVideo();
+                }
+            }
+        }
+
+        // Load the YouTube Iframe API
+        let tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        let firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      </script>
+  </body>
+  </html>
