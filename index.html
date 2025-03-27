@@ -1,138 +1,67 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Pohon</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" href="./Assets/CSS/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gouang</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/0x5841524f4e/js-lanyard/lanyard.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/minecraftia">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <!-- #Navbar -->
-    <nav class="wrapper">
-        <div class="brand">
-          <img src="./Assets/img/Logo.png" href="/">
-        </div>
-     <ul class="navigation">
-        <li><a href="./Materi/Materi.html" >Materi</a></li>
-        <li><a href="./Video/Video.html">Video</a></li>
-        <li><a href="./Kalkulator/Kalkulator.html">Kalkulator </a></li>
-        <li><a href="./Quiz/Quiz.html">Quiz</a></li>
-        <li><a href="./About.html"><img src="./Assets/img/about.png" class="about-img"></a></li>
-     </ul>
-    </nav>
-     <!-- #endNavbar-->
+<body data-bs-theme="dark">
+    <header class="mb-2">
+        <div class="navbar navbar-expand-lg">
+            <div class="container rounded-2 d-flex align-items-center">
+                <a href="#" class="navbar-brand text-center font-minecraftia">
+                    <img src="favicon.svg" width="30" height="30" class="me-2">
+                    Gouang
+                </a>
 
-    <!-- #slider-->
-     <div class="sliders">
-        <div class="slide">
-         <img src="./Assets/img/slide1.jpg">
+                <div class="dropdown no-bg">
+                    <a href="" class="d-block link-body-emphasis text-decoration-none" role="button" data-bs-toggle="dropdown">
+                        <img data-lucide="circle-user" width="25" height="25" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end my-3" style="background-color: rgba(255, 255, 255, .1); backdrop-filter: blur(5px);">
+                        <li><a href="#" class="dropdown-item" style="background-color: transparent; cursor: pointer;">Login</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="slide">
-        <a href="Video/Video.html">
-          <img src="./Assets/img/slide2.jpg">
-        </a>
-        </div>
-        <div class="slide">
-          <a href="Kalkulator/Kalkulator.html">
-            <img src="./Assets/img/slide3.jpg">
-          </a>
-        </div>
-        <div class="slide">
-          <a href="Quiz/Quiz.html">
-            <img src="./Assets/img/slide4.jpg">
-          </a>
-        </div>
-        <div class="nav">
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(+1)">&#10095;</a>
-        </div>
-    </div>
-    <!-- #end slider -->
-    <!-- #Categoty -->
-    <br>
-    <h2>Kategori</h2>
-    <br>
-    <div class="Category-grid">
-         <!-- Materi -->
-         <div class="item">
-            <a href="Materi/Materi.html">
-              <img src="./Assets/img/materi.png" >
-            </a>
-              <p class="title">Materi</p>
-          </div>
-        <!-- Video -->
-        <div class="item">
-            <a href="Video/Video.html">
-              <img src="./Assets/img/Video.png" >
-            </a>
-              <p class="title">Video</p>
-        </div>
-        <!-- Kalkulator -->
-        <div class="item">
-            <a href="Kalkulator/Kalkulator.html">
-              <img src="./Assets/img/Kalkulator.png" >
-            </a>
-              <p class="title">Kalkulator</p>
-        </div>
-        <!-- Quiz -->
-        <div class="item">
-            <a href="Quiz/Quiz.html">
-              <img src="./Assets/img/Quiz.png" >
-            </a>
-              <p class="title">Quiz</p>
-        </div>
-    </div>
-     <!-- #endCategory -->
-    <!-- #footer-->
-     <footer class="footer">
-      <div class="footer-left">
-        <h3>Dibuat oleh</h3>
-        <div class="footer-Logo">
-          <img src="./Assets/img/Logo kelompok.png">
-          <img src="./Assets/img/TRPL.png">
-          <img src="./Assets/img/polman.png">
-        </div>
-        <p class="footer-copyright">2024 Kelompok 9</p>
-        <p class="footer-copyright">1 TRPL A</p>
-        <p class="footer-copyright">Politeknik Manufaktur Negeri Bangka Belitung</p>
-      </div>
+    </header>
 
-      <div class="footer-center">
-       <div>
-        <img src="./Assets/img/Map.png">
-        <p><span>Indonesia</span>
-        Bangka Belitung , Sungai Liat</p>
-       </div>
-       <div>
-        <img src="./Assets/img/phone.png">
-        <p>+62 812-7114-4076</p>
-       </div>
-       <div>
-        <img src="./Assets/img/email.png">
-        <p><a herf="#">Bakugouopo098@gmail.com</a></p>
-       </div>
-      </div>
-
-      <div class="footer-right">
-        <p class="footer-about">
-          <span>About</span>
-          Website Pohon dan pohon berakar adalah website
-          yang bertujuan untuk Membimbing Mahsiswa dalam 
-          Mempelajari salah satu materi matematika diskrit 
-          mengenai Pohon dan pohon berakar . Tidak hanya itu
-          Website kami juga menyediakan berbagai kategori 
-          yang disediakan , mulai dari kumpulan materi ,
-          video , Kalkulator , dan Quiz.
-        </p>
-        <div class="footer-media">
-         <a href="https://youtube.com/@mochrzky5353?si=mKDM9C0j6uW7ZCyW"><img src="./Assets/img/yt.png"></a>
-         <a href="https://www.instagram.com/rzky.moch/feed/?hl=id"><img src="./Assets/img/Ig.png"></a>
+    <main class="ms-2">
+        <div class="background-video">
+            <div class="dots"></div>
+            <video src="videoplayback.mp4" autoplay muted loop></video>
         </div>
-      </div>
-     </footer>
-    <!-- #endfooter -->
- 
-<script src="./Assets/Js/script.js"></script>
+
+        <div class="float ms-4 rounded-2 mt-3 position-absolute top-0 start-0 p-1" style="overflow: hidden;">
+            <button id="toggleRangeBtn" class="border-0 bg-transparent"><img data-lucide="volume-2" width="25" height="25"></button>
+        </div>
+
+        <section class="d-flex flex-column align-items-center justify-content-center text-center">
+            <div class="position-absolute start-50 top-50 translate-middle">
+                <img id="lanyard-image" src="https://lanyard.cnrad.dev/api/146224461836713986?theme=&bg=None" alt="">
+            </div>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+
+        function updateLanyard() {
+            const lanyardImg = document.getElementById("lanyard-image");
+            lanyardImg.src = `https://lanyard.cnrad.dev/api/146224461836713986?theme=&bg=None&${new Date().getTime()}`;
+        }
+        setInterval(updateLanyard, 15000);
+        updateLanyard();
+    </script>
 </body>
 </html>
