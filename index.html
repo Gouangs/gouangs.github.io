@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gouango CV</title>
+
+    <link rel="Icon" href="Assets/Images/book.svg" type="image/svg">
+    <link rel="stylesheet" href="Assets/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="Assets/CSS/bundle.css">
+</head>
+<body class="bg-black text-white">
+
+    <div class="position-fixed w-100 h-100 z-10">
+        <video autoplay loop muted class="w-100 h-100 object-fit-cover">
+            <source src="Assets/Video/bg.mp4" type="video/mp4">
+        </video>
+        <div class="position-absolute w-100 h-100 top-0 start-0" id="blur"></div>
+    </div>
+    
+    <div class="position-absolute container d-flex align-items-center justify-content-center top-50 start-50 translate-middle">
+        <main class="container w-50 transparent-bg-black rounded d-flex flex-column px-4">
+            <div class="d-flex align-items-center my-3 pt-4">
+                <div class="d-flex flex-row align-items-center justify-content-center">
+                    <p class="fw-semibold"><i data-lucide="building" class="mx-1" width="25px" height="25px"></i>Bangka Belitung, Indonesia</p>
+                </div>
+
+                <div class="d-flex flex-row align-items-center justify-content-center ms-auto mx-4 text-success">
+                    <p class="fw-semibold"><i data-lucide="badge" width="25px" height="25px" class="mx-2"></i>Siap Bekerja</p>
+                </div>
+            </div>
+
+            <div class="mx-2 d-flex flex-column">
+                <div>
+                    <p class="fs-4 mb-0 fw-bold">Gouang</p>
+                    <p class="fs-6 fw-bolder text-success">Mahasiswa</p>
+                </div>
+                <p class="text-white-50 fst-italic">Perkenalkan saya <span class="text-white">Gouang</span>, saat ini sedang mengerjakan proyek sendiri. <span class="text-white">Hubungi saya</span> untuk memperkerjakan saya.</p>
+            </div>
+
+            <div class="mx-2 d-flex flex-column py-4">
+                <p class="fs-4 fw-bold">Menu</p>
+
+                <div class="d-flex flex-column">
+                    <a class="btn btn-outline-light py-1 w-50 rounded mb-2 text-center" href="about.html" role="button">Tentang</a>
+                    <a class="btn btn-outline-light py-1 w-50 rounded mb-2 text-center" href="works.html" role="button">Proyek</a>
+                    <a class="btn btn-outline-light py-1 w-50 rounded mb-2 text-center" href="skills.html" role="button">Skills</a>
+                    <a class="btn btn-outline-light py-1 w-50 rounded mb-2 text-center" href="contact.html" role="button">Kontak</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="Assets/JS/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

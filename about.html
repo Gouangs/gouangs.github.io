@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gouango CV</title>
+
+    <link rel="Icon" href="Assets/Images/book.svg" type="image/svg">
+    <link rel="stylesheet" href="Assets/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="Assets/CSS/bundle.css">
+</head>
+<body class="bg-black text-white">
+
+    <div class="position-fixed w-100 h-100 z-10">
+        <video autoplay loop muted class="w-100 h-100 object-fit-cover">
+            <source src="Assets/Video/bg.mp4" type="video/mp4">
+        </video>
+        <div class="position-absolute w-100 h-100 top-0 start-0" id="blur"></div>
+    </div>
+
+    <div class="position-absolute container d-flex align-items-center justify-content-center top-50 start-50 translate-middle">
+        <main class="container w-50 transparent-bg-black rounded d-flex flex-column px-4">
+            <div class="d-flex align-items-center pt-4 pb-2 mx-2">
+                <a href="index.html" class="text-white-50 text-decoration-none d-flex align-items-center gap-2"><i data-lucide="circle-arrow-left" width="20" height="20"></i> Kembali</a>
+            </div>
+            <div class="d-flex flex-column">
+                <p class="fs-4 fw-bold">Tentang Saya</p>
+                <p class="fs-6 fst-italic">Perkenalkan saya <span class="text-white fw-semibold">Gouang</span>, pada tahun 2024 saya masuk ke perguruan tinggi.</p>
+                
+                
+            </div>
+
+            <div class="d-flex flex-column py-2">
+                <p class="fs-4 fw-bold">Pendidikan</p>
+                <div class="py-2">
+                    <p class="fs-6 fw-semibold"><i data-lucide="university" class="me-2"></i>DIV - Politeknik Manufaktur Negeri Bangka Belitung [2024 - sekarang]</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="Assets/JS/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
